@@ -1,3 +1,4 @@
+using NerdStore.Core.DomainObjects;
 using System;
 using System.Linq;
 using Xunit;

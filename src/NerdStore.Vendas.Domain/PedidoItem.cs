@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NerdStore.Core.DomainObjects;
+using System;
 
 namespace NerdStore.Vendas.Domain
 {
@@ -11,6 +12,9 @@ namespace NerdStore.Vendas.Domain
 
         public PedidoItem(Guid produtoId, string produtoNome, int quantidade, decimal valorUnitario)
         {
+            if (quantidade > Pedido.MAX_UNIDADES_ITEM) throw new DomainException($"O limite máximo de {Pedido.MAX_UNIDADES_ITEM} unidades foi exedido.");
+            if (quantidade < Pedido.MIN_UNIDADES_ITEM) throw new DomainException($"O limite mínimo de {Pedido.MIN_UNIDADES_ITEM} unidades não foi atendido.");
+
             ProdutoId = produtoId;
             ProdutoNome = produtoNome;
             Quantidade = quantidade;
