@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
@@ -24,9 +25,14 @@ namespace NerdStore.Vendas.Domain
         private readonly List<PedidoItem> _pedidoItems;
         public IReadOnlyCollection<PedidoItem> PedidoItems => _pedidoItems;
 
+        private bool PedidoItemExistente(PedidoItem pedidoItem)
+        {
+            return _pedidoItems.Any(i => i.ProdutoId == pedidoItem.ProdutoId);
+        }
+
         public void AdicionarItem(PedidoItem pedidoItem)
         {
-            if(_pedidoItems.Any(i => i.ProdutoId == pedidoItem.ProdutoId))
+            if(PedidoItemExistente(pedidoItem))
             {
                 var produtoExistente = _pedidoItems.First(i => i.ProdutoId == pedidoItem.ProdutoId);
                 produtoExistente.AdicionarUnidades(pedidoItem.Quantidade);

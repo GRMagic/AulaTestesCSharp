@@ -12,8 +12,7 @@ namespace NerdStore.Vendas.Domain
 
         public PedidoItem(Guid produtoId, string produtoNome, int quantidade, decimal valorUnitario)
         {
-            if (quantidade > Pedido.MAX_UNIDADES_ITEM) throw new DomainException($"O limite máximo de {Pedido.MAX_UNIDADES_ITEM} unidades foi exedido.");
-            if (quantidade < Pedido.MIN_UNIDADES_ITEM) throw new DomainException($"O limite mínimo de {Pedido.MIN_UNIDADES_ITEM} unidades não foi atendido.");
+            ValidarQuantidade(quantidade);
 
             ProdutoId = produtoId;
             ProdutoNome = produtoNome;
@@ -23,12 +22,20 @@ namespace NerdStore.Vendas.Domain
 
         internal void AdicionarUnidades(int unidades)
         {
-            Quantidade += unidades;
+            var novaQuantidade = Quantidade + unidades;
+            ValidarQuantidade(novaQuantidade);
+            Quantidade = novaQuantidade;
         }
 
         internal decimal CalcularValor()
         {
             return Quantidade * ValorUnitario;
+        }
+
+        private void ValidarQuantidade(int quantidade)
+        {
+            if (quantidade > Pedido.MAX_UNIDADES_ITEM) throw new DomainException($"O limite máximo de {Pedido.MAX_UNIDADES_ITEM} unidades foi exedido.");
+            if (quantidade < Pedido.MIN_UNIDADES_ITEM) throw new DomainException($"O limite mínimo de {Pedido.MIN_UNIDADES_ITEM} unidades não foi atendido.");
         }
     }
 }
