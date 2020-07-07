@@ -1,10 +1,11 @@
-﻿using NerdStore.Core.DomainObjects;
+﻿using FluentValidation.Results;
+using NerdStore.Core.DomainObjects;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using ValidationResult = FluentValidation.Results.ValidationResult;
 
 namespace NerdStore.Vendas.Domain
 {
@@ -29,6 +30,11 @@ namespace NerdStore.Vendas.Domain
         {
             return _pedidoItems.Any(i => i.ProdutoId == pedidoItem.ProdutoId);
         }
+
+        public bool VoucherUtilizado { get; private set; }
+        public Voucher Voucher { get; private set; }
+
+        public decimal Desconto { get; private set; }
 
         public void ValidarPedidoItemInexistente(PedidoItem pedidoItemAtualizado)
         {
@@ -91,6 +97,36 @@ namespace NerdStore.Vendas.Domain
             ValidarPedidoItemInexistente(pedidoItemRemover);
             _pedidoItems.Remove(pedidoItemRemover);
             CalcularValorPedido();
+        }
+
+        public ValidationResult AplicarVoucher(Voucher voucher)
+        {
+            var result = voucher.ValidarSeAplicavel();
+            if (!result.IsValid) return result;
+
+            Voucher = voucher;
+            VoucherUtilizado = true;
+
+            CalcularValorTotalDesconto();
+
+            return result;
+        }
+
+        private void CalcularValorTotalDesconto()
+        {
+            decimal desconto = 0;
+            if (!VoucherUtilizado) return;
+            if( Voucher.Tipo == TipoDescontoVoucher.Valor)
+            {
+                desconto = Voucher.ValorDesconto ?? 0;
+            }
+            else
+            {
+                desconto = ValorTotal * (Voucher.PercentualDesconto ?? 0) / 100;
+                
+            }
+            ValorTotal -= desconto;
+            Desconto = desconto;
         }
     }
 }
