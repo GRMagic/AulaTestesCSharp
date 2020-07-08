@@ -9,7 +9,7 @@ namespace NerdStore.Vendas.Domain.Tests
     public class VoucherTests
     {
         [Fact(DisplayName = "Validar Voucher Tipo Valor Válido")]
-        [Trait("Categoria", "Vendas Voucher")]
+        [Trait("Categoria", "Vendas - Voucher")]
         public void Voucher_ValidarVoucherTipoValor_DeveEstarValido()
         {
             // Arrange

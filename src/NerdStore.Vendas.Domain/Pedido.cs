@@ -58,6 +58,7 @@ namespace NerdStore.Vendas.Domain
         private void CalcularValorPedido()
         {
             ValorTotal = PedidoItems.Sum(i => i.CalcularValor());
+            CalcularValorTotalDesconto();
         }
 
         public void TornarRascunho()
@@ -107,15 +108,18 @@ namespace NerdStore.Vendas.Domain
             Voucher = voucher;
             VoucherUtilizado = true;
 
-            CalcularValorTotalDesconto();
+            CalcularValorPedido();
 
             return result;
         }
 
         private void CalcularValorTotalDesconto()
         {
-            decimal desconto = 0;
             if (!VoucherUtilizado) return;
+
+            decimal desconto = 0;
+            var valor = ValorTotal;
+
             if( Voucher.Tipo == TipoDescontoVoucher.Valor)
             {
                 desconto = Voucher.ValorDesconto ?? 0;
@@ -125,7 +129,8 @@ namespace NerdStore.Vendas.Domain
                 desconto = ValorTotal * (Voucher.PercentualDesconto ?? 0) / 100;
                 
             }
-            ValorTotal -= desconto;
+            valor -= desconto;
+            ValorTotal = valor > 0 ? valor : 0;
             Desconto = desconto;
         }
     }
