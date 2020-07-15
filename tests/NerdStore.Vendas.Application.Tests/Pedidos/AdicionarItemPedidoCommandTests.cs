@@ -38,7 +38,7 @@ namespace NerdStore.Vendas.Application.Tests.Pedidos
             Assert.False(result);
             Assert.Contains(AdicionarItemPedidoValidator.IdClienteErroMsg, pedidoCommand.ValidationResult.Errors.Select(c => c.ErrorMessage));
             Assert.Contains(AdicionarItemPedidoValidator.IdProdutoErroMsg, pedidoCommand.ValidationResult.Errors.Select(c => c.ErrorMessage));
-            Assert.Contains(AdicionarItemPedidoValidator.NomeErroMsg, pedidoCommand.ValidationResult.Errors.Select(c => c.ErrorMessage));
+            Assert.Contains(AdicionarItemPedidoValidator.NomeProdutoErroMsg, pedidoCommand.ValidationResult.Errors.Select(c => c.ErrorMessage));
             Assert.Contains(AdicionarItemPedidoValidator.QtdMinErroMsg, pedidoCommand.ValidationResult.Errors.Select(c => c.ErrorMessage));
             Assert.Contains(AdicionarItemPedidoValidator.ValorErroMsg, pedidoCommand.ValidationResult.Errors.Select(c => c.ErrorMessage));
         }

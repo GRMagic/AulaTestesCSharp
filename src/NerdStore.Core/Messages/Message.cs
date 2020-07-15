@@ -4,6 +4,7 @@ using System.Text;
 
 namespace NerdStore.Core.Messages
 {
+
     public abstract class Message
     {
         public string Type { get; protected set; }
