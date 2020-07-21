@@ -26,7 +26,7 @@ namespace NerdStore.Vendas.Domain
         private readonly List<PedidoItem> _pedidoItems;
         public IReadOnlyCollection<PedidoItem> PedidoItems => _pedidoItems;
 
-        private bool PedidoItemExistente(PedidoItem pedidoItem)
+        public bool PedidoItemExistente(PedidoItem pedidoItem)
         {
             return _pedidoItems.Any(i => i.ProdutoId == pedidoItem.ProdutoId);
         }
