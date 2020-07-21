@@ -9,7 +9,7 @@ using ValidationResult = FluentValidation.Results.ValidationResult;
 
 namespace NerdStore.Vendas.Domain
 {
-    public class Pedido : Entity
+    public class Pedido : Entity, IAggregateRoot
     {
         public static int MAX_UNIDADES_ITEM => 15;
         public static int MIN_UNIDADES_ITEM => 1;

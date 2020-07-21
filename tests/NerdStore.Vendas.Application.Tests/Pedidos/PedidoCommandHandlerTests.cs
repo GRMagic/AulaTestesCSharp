@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace NerdStore.Vendas.Application.Tests.Pedidos
@@ -19,6 +20,8 @@ namespace NerdStore.Vendas.Application.Tests.Pedidos
         {
             // Arrange
             var mocker = new AutoMocker();
+            mocker.GetMock<IPedidoRepository>().Setup(r => r.UoW.Commit()).Returns(Task.FromResult(true));
+
             var pedidoHandler = mocker.CreateInstance<PedidoCommandHandler>();
 
             var adicionarItemPedidoCommand = new AdicionarItemPedidoCommand(Guid.NewGuid(), Guid.NewGuid(), "Produto A", 2, 100);
@@ -29,7 +32,8 @@ namespace NerdStore.Vendas.Application.Tests.Pedidos
             // Assert
             Assert.True(await result);
             mocker.GetMock<IPedidoRepository>().Verify(r => r.Adicionar(It.IsAny<Pedido>()));
-            mocker.GetMock<IMediator>().Verify(r => r.Publish(It.IsAny<INotification>(), CancellationToken.None));
+            mocker.GetMock<IPedidoRepository>().Verify(r => r.UoW.Commit(), Times.Once);
+            //mocker.GetMock<IMediator>().Verify(r => r.Publish(It.IsAny<INotification>(), CancellationToken.None));
 
         }
 
