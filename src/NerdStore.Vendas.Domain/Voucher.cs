@@ -1,29 +1,33 @@
-﻿using FluentValidation;
-using FluentValidation.Results;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using FluentValidation;
+using FluentValidation.Results;
+using NerdStore.Core.DomainObjects;
 
 namespace NerdStore.Vendas.Domain
 {
-    public class Voucher
+    public class Voucher : Entity
     {
         public string Codigo { get; private set; }
         public decimal? PercentualDesconto { get; private set; }
         public decimal? ValorDesconto { get; private set; }
-        public TipoDescontoVoucher Tipo { get; private set; }
         public int Quantidade { get; private set; }
+        public TipoDescontoVoucher TipoDescontoVoucher { get; private set; }
         public DateTime DataValidade { get; private set; }
         public bool Ativo { get; private set; }
         public bool Utilizado { get; private set; }
 
-        public Voucher(string codigo, decimal? percentualDesconto, decimal? valorDesconto, int quantidade, TipoDescontoVoucher tipo, DateTime dataValidade, bool ativo, bool utilizado)
+        // EF Rel.
+        public ICollection<Pedido> Pedidos { get; set; }
+
+        public Voucher(string codigo, decimal? percentualDesconto, decimal? valorDesconto, int quantidade,
+            TipoDescontoVoucher tipoDescontoVoucher, DateTime dataValidade, bool ativo, bool utilizado)
         {
             Codigo = codigo;
             PercentualDesconto = percentualDesconto;
             ValorDesconto = valorDesconto;
             Quantidade = quantidade;
-            Tipo = tipo;
+            TipoDescontoVoucher = tipoDescontoVoucher;
             DataValidade = dataValidade;
             Ativo = ativo;
             Utilizado = utilizado;
@@ -44,6 +48,7 @@ namespace NerdStore.Vendas.Domain
         public static string QuantidadeErroMsg => "Este voucher não está mais disponível";
         public static string ValorDescontoErroMsg => "O valor do desconto precisa ser superior a 0";
         public static string PercentualDescontoErroMsg => "O valor da porcentagem de desconto precisa ser superior a 0";
+
 
         public VoucherAplicavelValidation()
         {
@@ -67,7 +72,7 @@ namespace NerdStore.Vendas.Domain
                 .GreaterThan(0)
                 .WithMessage(QuantidadeErroMsg);
 
-            When(f => f.Tipo == TipoDescontoVoucher.Valor, () =>
+            When(f => f.TipoDescontoVoucher == TipoDescontoVoucher.Valor, () =>
             {
                 RuleFor(f => f.ValorDesconto)
                     .NotNull()
@@ -76,7 +81,7 @@ namespace NerdStore.Vendas.Domain
                     .WithMessage(ValorDescontoErroMsg);
             });
 
-            When(f => f.Tipo == TipoDescontoVoucher.Porcentagem, () =>
+            When(f => f.TipoDescontoVoucher == TipoDescontoVoucher.Porcentagem, () =>
             {
                 RuleFor(f => f.PercentualDesconto)
                     .NotNull()
@@ -90,6 +95,5 @@ namespace NerdStore.Vendas.Domain
         {
             return dataValidade >= DateTime.Now;
         }
-
     }
 }

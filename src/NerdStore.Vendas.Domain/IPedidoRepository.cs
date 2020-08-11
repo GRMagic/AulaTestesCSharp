@@ -12,10 +12,18 @@ namespace NerdStore.Vendas.Domain
 
         void Atualizar(Pedido pedido);
 
+        public Task<IEnumerable<Pedido>> ObterListaPorClienteId(Guid clienteId);
+
         Task<Pedido> ObterPedidoRascunhoPorClienteId(Guid clienteId);
 
         void AdicionarItem(PedidoItem item);
 
         void AtualizarItem(PedidoItem item);
+
+        void RemoverItem(PedidoItem pedidoItem);
+
+        Task<Voucher> ObterVoucherPorCodigo(string codigo);
+
+        Task<PedidoItem> ObterItemPorPedido(Guid pedidoId, Guid produtoId);
     }
 }

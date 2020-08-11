@@ -1,30 +1,34 @@
-﻿using NerdStore.Core.DomainObjects;
-using System;
+﻿using System;
+using NerdStore.Core.DomainObjects;
 
 namespace NerdStore.Vendas.Domain
 {
-    public class PedidoItem
+    public class PedidoItem : Entity
     {
+        public Guid PedidoId { get; private set; }
         public Guid ProdutoId { get; private set; }
         public string ProdutoNome { get; private set; }
         public int Quantidade { get; private set; }
         public decimal ValorUnitario { get; private set; }
 
+        // EF Rel.
+        public Pedido Pedido { get; set; }
+
         public PedidoItem(Guid produtoId, string produtoNome, int quantidade, decimal valorUnitario)
         {
-            ValidarQuantidade(quantidade);
+            if (quantidade < Pedido.MIN_UNIDADES_ITEM) throw new DomainException($"Mínimo de {Pedido.MIN_UNIDADES_ITEM} unidades por produto");
+            if (quantidade > Pedido.MAX_UNIDADES_ITEM) throw new DomainException($"Máximo de {Pedido.MAX_UNIDADES_ITEM} unidades por produto");
 
             ProdutoId = produtoId;
             ProdutoNome = produtoNome;
             Quantidade = quantidade;
             ValorUnitario = valorUnitario;
         }
+        protected PedidoItem() { }
 
-        internal void AdicionarUnidades(int unidades)
+        internal void AssociarPedido(Guid pedidoId)
         {
-            var novaQuantidade = Quantidade + unidades;
-            ValidarQuantidade(novaQuantidade);
-            Quantidade = novaQuantidade;
+            PedidoId = pedidoId;
         }
 
         internal decimal CalcularValor()
@@ -32,10 +36,14 @@ namespace NerdStore.Vendas.Domain
             return Quantidade * ValorUnitario;
         }
 
-        private void ValidarQuantidade(int quantidade)
+        internal void AdicionarUnidades(int unidades)
         {
-            if (quantidade > Pedido.MAX_UNIDADES_ITEM) throw new DomainException($"O limite máximo de {Pedido.MAX_UNIDADES_ITEM} unidades foi exedido.");
-            if (quantidade < Pedido.MIN_UNIDADES_ITEM) throw new DomainException($"O limite mínimo de {Pedido.MIN_UNIDADES_ITEM} unidades não foi atendido.");
+            Quantidade += unidades;
+        }
+
+        internal void AtualizarUnidades(int unidades)
+        {
+            Quantidade = unidades;
         }
     }
 }
