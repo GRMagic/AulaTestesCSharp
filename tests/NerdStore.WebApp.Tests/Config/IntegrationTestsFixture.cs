@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace NerdStore.WebApp.Tests.Config
@@ -31,6 +32,10 @@ namespace NerdStore.WebApp.Tests.Config
         {
             var clientOptions = new WebApplicationFactoryClientOptions
             {
+                AllowAutoRedirect = true, // O default já é true
+                MaxAutomaticRedirections = 7, // O default já é 7
+                HandleCookies = true, // O default já é true
+                BaseAddress = new Uri("http://localhost")// O default já é http://localhost
             };
             Factory = new LojaAppFactory<TStartup>();
             Client = Factory.CreateClient(clientOptions);
@@ -53,6 +58,27 @@ namespace NerdStore.WebApp.Tests.Config
             UsuarioSenha = faker.Internet.Password(8, false, "", "@1Ab_");
         }
 
+        public async Task RealizarLoginWeb()
+        {
+            var initialResponse = await Client.GetAsync("/Identity/Account/Login");
+            initialResponse.EnsureSuccessStatusCode();
+
+            var antiForgeryToken = ObterAntiForgeryToken(await initialResponse.Content.ReadAsStringAsync());
+
+            var formData = new Dictionary<string, string>
+            {
+                {AntiForgeryFieldName, antiForgeryToken},
+                {"Input.Email", "qual_e_a_treta@hotmail.com"},
+                {"Input.Password", "Teste@123"}
+            };
+
+            var postRequest = new HttpRequestMessage(HttpMethod.Post, "/Identity/Account/Login")
+            {
+                Content = new FormUrlEncodedContent(formData)
+            };
+
+            await Client.SendAsync(postRequest);
+        }
 
         public void Dispose()
         {
