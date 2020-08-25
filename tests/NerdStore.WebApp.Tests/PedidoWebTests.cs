@@ -29,6 +29,8 @@ namespace NerdStore.WebApp.Tests
 
             //TODO: Limpar carrinho antes do teste
 
+            await _testsFixture.RealizarLoginWeb();
+
             var produtoId = new Guid("113A4952-FAFD-45CC-B0B6-197D3C5F51A4");
             const int quantidade = 2;
             
