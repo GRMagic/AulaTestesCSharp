@@ -25,8 +25,9 @@ namespace NerdStore.WebApp.Tests
         public async Task AdicionarItem_NovoPedido_DeveAtualizarValorTotal()
         {
             // Arrange
-
             await _testsFixture.RealizarLoginWeb();
+
+            //TODO: Limpar carrinho antes do teste
 
             var produtoId = new Guid("113A4952-FAFD-45CC-B0B6-197D3C5F51A4");
             const int quantidade = 2;
@@ -52,10 +53,16 @@ namespace NerdStore.WebApp.Tests
             var postResponse = await _testsFixture.Client.SendAsync(postRequest);
 
             // Assert
+            postResponse.EnsureSuccessStatusCode();
+
             var sourceCode = await postResponse.Content.ReadAsStringAsync();
             var html = (await new HtmlParser().ParseDocumentAsync(sourceCode)).All;
 
-            var formQuantidade = html?.FirstOrDefault(e => e.Id == "quantidade")?.GetAttribute("value");
+            var formQuantidade = html?.FirstOrDefault(e => e.Id == "quantidade")?.GetAttribute("value")?.ApenasNumeros();
+            var formValorUnitario = html?.FirstOrDefault(e => e.Id == "valorUnitario")?.TextContent?.Split(",")?[0]?.ApenasNumeros();
+            var formValorTotal = html?.FirstOrDefault(e => e.Id == "valorTotal")?.TextContent?.Split(",")?[0]?.ApenasNumeros();
+
+            Assert.Equal(formValorTotal, formValorUnitario * formQuantidade);
 
         }
     }
