@@ -42,7 +42,7 @@ namespace NerdStore.WebApp.Tests
             postResponse.EnsureSuccessStatusCode();
         }
 
-        [Fact(DisplayName = "Remover item em pedido existente"), TestPriority(2)]
+        [Fact(DisplayName = "Remover item em pedido existente"), TestPriority(3)]
         [Trait("Categoria", "Integração API - Pedido")]
         public async Task RemoverItem_PedidoExistente_DeveRetornarComSucesso()
         {
@@ -53,6 +53,26 @@ namespace NerdStore.WebApp.Tests
             
             // Act
             var deleteResponse = await _testsFixture.Client.DeleteAsync($"api/carrinho/{produtoId}");
+
+            // Assert
+            deleteResponse.EnsureSuccessStatusCode();
+        }
+
+        [Fact(DisplayName = "Atualizar item em pedido existente"), TestPriority(2)]
+        [Trait("Categoria", "Integração API - Pedido")]
+        public async Task AtualizarItem_PedidoExistente_DeveRetornarComSucesso()
+        {
+            // Arrange
+            var itemInfo = new ItemViewModel
+            {
+                Id = new Guid("113A4952-FAFD-45CC-B0B6-197D3C5F51A4"),
+                Quantidade = 1
+            };
+
+            await _testsFixture.RealizarLoginApi();
+
+            // Act
+            var deleteResponse = await _testsFixture.Client.PutAsJsonAsync($"api/carrinho/{itemInfo.Id}", itemInfo);
 
             // Assert
             deleteResponse.EnsureSuccessStatusCode();

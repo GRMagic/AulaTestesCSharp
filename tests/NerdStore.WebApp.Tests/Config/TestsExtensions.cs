@@ -20,5 +20,10 @@ namespace NerdStore.WebApp.Tests.Config
         {
             return await httpClient.PostAsync(requestUri, new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json"));
         }
+
+        public static async Task<HttpResponseMessage> PutAsJsonAsync(this HttpClient httpClient, string requestUri, object content)
+        {
+            return await httpClient.PutAsync(requestUri, new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json"));
+        }
     }
 }
