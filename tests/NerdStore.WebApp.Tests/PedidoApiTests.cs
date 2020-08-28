@@ -34,13 +34,28 @@ namespace NerdStore.WebApp.Tests
             };
 
             await _testsFixture.RealizarLoginApi();
-            _testsFixture.Client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _testsFixture.UsuarioToken);
-
+            
             // Act
             var postResponse = await _testsFixture.Client.PostAsJsonAsync("api/carrinho", itemInfo);
 
             // Assert
             postResponse.EnsureSuccessStatusCode();
+        }
+
+        [Fact(DisplayName = "Remover item em pedido existente"), TestPriority(2)]
+        [Trait("Categoria", "Integração API - Pedido")]
+        public async Task RemoverItem_PedidoExistente_DeveRetornarComSucesso()
+        {
+            // Arrange
+            var produtoId = new Guid("113A4952-FAFD-45CC-B0B6-197D3C5F51A4");
+
+            await _testsFixture.RealizarLoginApi();
+            
+            // Act
+            var deleteResponse = await _testsFixture.Client.DeleteAsync($"api/carrinho/{produtoId}");
+
+            // Assert
+            deleteResponse.EnsureSuccessStatusCode();
         }
     }
 }

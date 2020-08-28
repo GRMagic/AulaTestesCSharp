@@ -96,6 +96,8 @@ namespace NerdStore.WebApp.Tests.Config
             var response = await Client.PostAsJsonAsync("api/Login", userData);
             response.EnsureSuccessStatusCode();
             UsuarioToken = await response.Content.ReadAsStringAsync();
+
+            Client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", UsuarioToken);
         }
 
         public void Dispose()
