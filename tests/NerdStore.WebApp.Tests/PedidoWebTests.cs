@@ -64,6 +64,7 @@ namespace NerdStore.WebApp.Tests
             var formValorUnitario = html?.FirstOrDefault(e => e.Id == "valorUnitario")?.TextContent?.Split(",")?[0]?.ApenasNumeros();
             var formValorTotal = html?.FirstOrDefault(e => e.Id == "valorTotal")?.TextContent?.Split(",")?[0]?.ApenasNumeros();
 
+            Assert.Equal(2, formQuantidade);
             Assert.Equal(formValorTotal, formValorUnitario * formQuantidade);
 
         }

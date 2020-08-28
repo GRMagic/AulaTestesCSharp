@@ -1,6 +1,7 @@
 ﻿using Bogus;
 using Microsoft.AspNetCore.Mvc.Testing;
 using NerdStore.WebApp.MVC;
+using NerdStore.WebApp.MVC.Models;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -27,6 +28,8 @@ namespace NerdStore.WebApp.Tests.Config
         public string AntiForgeryFieldName = "__RequestVerificationToken";
         public string UsuarioEmail;
         public string UsuarioSenha;
+
+        public string UsuarioToken;
 
         public IntegrationTestsFixture()
         {
@@ -78,6 +81,21 @@ namespace NerdStore.WebApp.Tests.Config
             };
 
             await Client.SendAsync(postRequest);
+        }
+
+        public async Task RealizarLoginApi()
+        {
+            Client = Factory.CreateClient(); // Recria o cliente para limpar configurações de web 
+
+            var userData = new LoginViewModel
+            {
+                Email = "qual_e_a_treta@hotmail.com",
+                Senha = "Teste@123"
+            };
+            
+            var response = await Client.PostAsJsonAsync("api/Login", userData);
+            response.EnsureSuccessStatusCode();
+            UsuarioToken = await response.Content.ReadAsStringAsync();
         }
 
         public void Dispose()

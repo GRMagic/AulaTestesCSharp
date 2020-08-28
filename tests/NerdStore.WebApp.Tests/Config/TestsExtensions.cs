@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace NerdStore.WebApp.Tests.Config
 {
@@ -11,6 +14,11 @@ namespace NerdStore.WebApp.Tests.Config
         public static decimal ApenasNumeros(this string value)
         {
             return Convert.ToDecimal(new string(value.Where(char.IsDigit).ToArray()));
+        }
+
+        public static async Task<HttpResponseMessage> PostAsJsonAsync(this HttpClient httpClient, string requestUri, object content)
+        {
+            return await httpClient.PostAsync(requestUri, new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json"));
         }
     }
 }
