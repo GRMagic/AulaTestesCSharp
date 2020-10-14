@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NerdStore.BDD.Tests.Config
+﻿namespace NerdStore.BDD.Tests.Config
 {
-    public class PageObjectModel
+    public abstract class PageObjectModel
     {
         protected readonly SeleniumHelper Helper;
 
-        public PageObjectModel(SeleniumHelper helper)
+        protected PageObjectModel(SeleniumHelper helper)
         {
             Helper = helper;
         }
