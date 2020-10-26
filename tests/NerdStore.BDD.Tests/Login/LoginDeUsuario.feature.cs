@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace NerdStore.BDD.Tests.Usuario
+namespace NerdStore.BDD.Tests.Login
 {
     using TechTalk.SpecFlow;
     using System;
@@ -40,7 +40,7 @@ namespace NerdStore.BDD.Tests.Usuario
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("pt-BR"), "Usuario", "Usuário - Login", "\tComo um usuario\r\n\tEu desejo realizar o login\r\n\tPara que eu possa acessar as dema" +
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("pt-BR"), "Login", "Usuário - Login", "\tComo um usuario\r\n\tEu desejo realizar o login\r\n\tPara que eu possa acessar as dema" +
                     "is funcionalidades", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
@@ -115,14 +115,14 @@ testRunner.Given("Que o visitante está acessando o site da loja", ((string)(nul
 #line 8
 testRunner.When("Ele clicar em login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
 #line hidden
-                TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                             "Dados"});
-                table4.AddRow(new string[] {
+                table1.AddRow(new string[] {
                             "E-mail"});
-                table4.AddRow(new string[] {
+                table1.AddRow(new string[] {
                             "Senha"});
 #line 9
-testRunner.And("Preencher os dados do formulario de login", ((string)(null)), table4, "E ");
+testRunner.And("Preencher os dados do formulario de login", ((string)(null)), table1, "E ");
 #line hidden
 #line 13
 testRunner.And("Clicar no botão login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");

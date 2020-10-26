@@ -7,6 +7,7 @@ using Xunit;
 namespace NerdStore.BDD.Tests.Config
 {
     [CollectionDefinition(nameof(AutomacaoWebFixtureCollection))]
+    [TechTalk.SpecFlow.Scope()]
     public class AutomacaoWebFixtureCollection : ICollectionFixture<AutomacaoWebTestsFixture> { }
 
     public class AutomacaoWebTestsFixture

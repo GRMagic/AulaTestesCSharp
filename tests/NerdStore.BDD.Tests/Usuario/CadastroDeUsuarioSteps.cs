@@ -6,18 +6,19 @@ using Xunit;
 namespace NerdStore.BDD.Tests.Usuario
 {
     [Binding]
+    [Scope(Feature = "Usuário - Cadastro")]
     [CollectionDefinition(nameof(AutomacaoWebFixtureCollection))]
-    public class CadastroDeUsuarioSteps
+    public class CadastroDeUsuarioSteps : CommonSteps
     {
         private readonly CadastroDeUsuarioTela _cadastroDeUsuarioTela;
         private readonly AutomacaoWebTestsFixture _automacaoWebTestsFixture;
 
-        public CadastroDeUsuarioSteps(CadastroDeUsuarioTela cadastroDeUsuarioTela, AutomacaoWebTestsFixture automacaoWebTestsFixture)
+        public CadastroDeUsuarioSteps(AutomacaoWebTestsFixture automacaoWebTestsFixture) : base(automacaoWebTestsFixture)
         {
-            _cadastroDeUsuarioTela = cadastroDeUsuarioTela;
             _automacaoWebTestsFixture = automacaoWebTestsFixture;
+            _baseUsuarioTela = _cadastroDeUsuarioTela = new CadastroDeUsuarioTela(automacaoWebTestsFixture.BrowserHelper);
         }
-        
+
         [When(@"Ele clicar em registrar")]
         public void QuandoEleClicarEmRegistrar()
         {

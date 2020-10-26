@@ -115,16 +115,16 @@ testRunner.Given("Que o visitante está acessando o site da loja", ((string)(nul
 #line 8
 testRunner.When("Ele clicar em registrar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
 #line hidden
-                TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                             "Dados"});
-                table1.AddRow(new string[] {
+                table2.AddRow(new string[] {
                             "E-mail"});
-                table1.AddRow(new string[] {
+                table2.AddRow(new string[] {
                             "Senha"});
-                table1.AddRow(new string[] {
+                table2.AddRow(new string[] {
                             "Confirmação da Senha"});
 #line 9
-testRunner.And("Preencher os dados do formulario", ((string)(null)), table1, "E ");
+testRunner.And("Preencher os dados do formulario", ((string)(null)), table2, "E ");
 #line hidden
 #line 14
 testRunner.And("Clicar no botão registrar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
@@ -173,16 +173,16 @@ testRunner.Given("Que o visitante está acessando o site da loja", ((string)(nul
 #line 20
 testRunner.When("Ele clicar em registrar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
 #line hidden
-                TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                             "Dados"});
-                table2.AddRow(new string[] {
+                table3.AddRow(new string[] {
                             "E-mail"});
-                table2.AddRow(new string[] {
+                table3.AddRow(new string[] {
                             "Senha"});
-                table2.AddRow(new string[] {
+                table3.AddRow(new string[] {
                             "Confirmação de senha"});
 #line 21
-testRunner.And("Preencher os dados do formulario com uma senha sem maiusculas", ((string)(null)), table2, "E ");
+testRunner.And("Preencher os dados do formulario com uma senha sem maiusculas", ((string)(null)), table3, "E ");
 #line hidden
 #line 26
 testRunner.And("Clicar no botão registrar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
@@ -228,16 +228,16 @@ testRunner.Given("Que o visitante está acessando o site da loja", ((string)(nul
 #line 31
 testRunner.When("Ele clicar em registrar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
 #line hidden
-                TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
                             "Dados"});
-                table3.AddRow(new string[] {
+                table4.AddRow(new string[] {
                             "E-mail"});
-                table3.AddRow(new string[] {
+                table4.AddRow(new string[] {
                             "Senha"});
-                table3.AddRow(new string[] {
+                table4.AddRow(new string[] {
                             "Confirmação de senha"});
 #line 32
-testRunner.And("Preencher os dados do formulario com uma senha sem caractere especial", ((string)(null)), table3, "E ");
+testRunner.And("Preencher os dados do formulario com uma senha sem caractere especial", ((string)(null)), table4, "E ");
 #line hidden
 #line 37
 testRunner.And("Clicar no botão registrar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
