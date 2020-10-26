@@ -16,7 +16,7 @@ namespace NerdStore.BDD.Tests.Config
         public SeleniumHelper(ConfigurationHelper configuration)
         {
             Browser browser = Browser.Chrome;
-            bool headless = true;
+            bool headless = false;
             Configuration = configuration;
             WebDriver = WebDriverFactory.CreateWebDriver(browser, Configuration.WebDrivers, headless);
             WebDriver.Manage().Window.Maximize();
