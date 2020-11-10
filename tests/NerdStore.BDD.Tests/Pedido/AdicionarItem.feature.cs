@@ -110,13 +110,13 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 7
-testRunner.Given("que um produto esteja na vitrine", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
+testRunner.Given("que o usuário esteja logado", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
 #line 8
-testRunner.And("esteja disponível no estoque", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+testRunner.And("que um produto esteja na vitrine", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
 #line 9
-testRunner.And("o usuário esteja logado", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+testRunner.And("esteja disponível no estoque", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
 #line 10
 testRunner.When("o usuário adicionar uma unidade ao carrinho", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
@@ -131,14 +131,14 @@ testRunner.And("o valor total do pedido será extatamente o valor do item adicio
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Adicionar items acima do limite")]
+        [Xunit.SkippableFactAttribute(DisplayName="Adicionar itens acima do limite")]
         [Xunit.TraitAttribute("FeatureTitle", "Pedido - Adicionar item ao carrinho")]
-        [Xunit.TraitAttribute("Description", "Adicionar items acima do limite")]
-        public virtual void AdicionarItemsAcimaDoLimite()
+        [Xunit.TraitAttribute("Description", "Adicionar itens acima do limite")]
+        public virtual void AdicionarItensAcimaDoLimite()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adicionar items acima do limite", null, tagsOfScenario, argumentsOfScenario);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adicionar itens acima do limite", null, tagsOfScenario, argumentsOfScenario);
 #line 14
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -160,18 +160,21 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 15
-testRunner.Given("que um produto esteja na vitrine", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
+testRunner.Given("que o usuário esteja logado", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
 #line 16
-testRunner.And("esteja disponível no estoque", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+testRunner.And("aceita o uso de cookies", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
 #line 17
-testRunner.And("o usuário esteja logado", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+testRunner.And("que um produto esteja na vitrine", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
 #line 18
-testRunner.When("o usuário adicionar um item acima da quantidade máxima permitida", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+testRunner.And("esteja disponível no estoque", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
 #line 19
+testRunner.When("o usuário adicionar um item acima da quantidade máxima permitida", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line hidden
+#line 20
 testRunner.Then("receberá uma mensagem de erro mencionando que foi ultrapassada a quantidade limit" +
                         "e", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
@@ -187,7 +190,7 @@ testRunner.Then("receberá uma mensagem de erro mencionando que foi ultrapassada
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adicionar item já existente no carrinho", null, tagsOfScenario, argumentsOfScenario);
-#line 21
+#line 22
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -207,28 +210,31 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 22
-testRunner.Given("que um produto esteja na vitrine", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
-#line hidden
 #line 23
-testRunner.And("esteja disponível no estoque", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+testRunner.Given("que o usuário esteja logado", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
 #line 24
-testRunner.And("o usuário esteja logado", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+testRunner.And("aceita o uso de cookies", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
 #line 25
-testRunner.And("o mesmo produto tenha sido adicionado ao carrinho anteriormente", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+testRunner.And("que um produto esteja na vitrine", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
 #line 26
-testRunner.When("o usuário adicionar uma unidade no pedido", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+testRunner.And("esteja disponível no estoque", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
 #line 27
-testRunner.Then("o usuário será redirecionado ao resumo da compra", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+testRunner.And("o mesmo produto tenha sido adicionado ao carrinho anteriormente", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
 #line 28
-testRunner.And("a quantidade quantidade daquele produto será acrescida de uma unidade a mais", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+testRunner.When("o usuário adicionar uma unidade no pedido", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
 #line hidden
 #line 29
+testRunner.Then("o usuário será redirecionado ao resumo da compra", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+#line hidden
+#line 30
+testRunner.And("a quantidade quantidade daquele produto será acrescida de uma unidade a mais", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+#line hidden
+#line 31
 testRunner.And("o valor total do pedido será a multiplicação da quantidade de itens pelo valor un" +
                         "itário", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
@@ -244,7 +250,7 @@ testRunner.And("o valor total do pedido será a multiplicação da quantidade de
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adicionar item já existente no carrinho onde a soma ultrapassa o limite máximo", null, tagsOfScenario, argumentsOfScenario);
-#line 31
+#line 33
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -264,25 +270,28 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 32
-testRunner.Given("que um produto esteja na vitrine", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
-#line hidden
-#line 33
-testRunner.And("esteja disponível no estoque", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
-#line hidden
 #line 34
-testRunner.And("o usuário esteja logado", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+testRunner.Given("que o usuário esteja logado", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
 #line 35
-testRunner.And("o mesmo produto tenha sido adicionado ao carrinho anteriormente", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+testRunner.And("aceita o uso de cookies", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
 #line 36
-testRunner.When("o usuário adicionar mais que a quantidade máxima permitida ao carrinho", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+testRunner.And("que um produto esteja na vitrine", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
 #line 37
-testRunner.Then("o usuário será redirecionado ao resumo da compra", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+testRunner.And("esteja disponível no estoque", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
 #line 38
+testRunner.And("o mesmo produto tenha sido adicionado ao carrinho anteriormente", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+#line hidden
+#line 39
+testRunner.When("o usuário adicionar mais que a quantidade máxima permitida ao carrinho", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line hidden
+#line 40
+testRunner.Then("o usuário será redirecionado ao resumo da compra", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+#line hidden
+#line 41
 testRunner.And("receberá uma mensagem de erro mencionando que foi ultrapassada a quantidade limit" +
                         "e", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using NerdStore.Core.DomainObjects;
 using NerdStore.Core.Messages;
+using NerdStore.Core.Messages.CommonMessages.Notifications;
 using NerdStore.Vendas.Application.Events;
 using NerdStore.Vendas.Domain;
 using System;
@@ -25,7 +26,6 @@ namespace NerdStore.Vendas.Application.Commands
             _pedidoRepository = pedidoRepository;
             _mediator = mediator;
         }
-
         public async Task<bool> Handle(AdicionarItemPedidoCommand message, CancellationToken cancellationToken)
         {
             if (!await ValidarComando(message)) return false;
@@ -157,16 +157,12 @@ namespace NerdStore.Vendas.Application.Commands
 
         private async Task<bool> ValidarComando(Command command)
         {
-            if (!command.EhValido())
-            {
-                foreach (var error in command.ValidationResult.Errors)
-                {
-                    await _mediator.Publish(new DomainNotification(command.Type, error.ErrorMessage));
-                }
-                return false;
-            }
+            if (command.EhValido()) return true;
+        
+            foreach (var error in command.ValidationResult.Errors)
+                await _mediator.Publish(new DomainNotification(command.Type, error.ErrorMessage));
 
-            return true;
+            return false;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using NerdStore.BDD.Tests.Config;
+using NerdStore.BDD.Tests.Login;
 using System;
 using TechTalk.SpecFlow;
 using Xunit;
@@ -11,6 +12,7 @@ namespace NerdStore.BDD.Tests.Pedido
     {
         private readonly AutomacaoWebTestsFixture _testsFixture;
         private readonly PedidoTela _pedidoTela;
+        private readonly LoginUsuarioTela _loginUsuarioTela;
 
         private string _urlProduto;
 
@@ -18,6 +20,24 @@ namespace NerdStore.BDD.Tests.Pedido
         {
             _testsFixture = testsFixture;
             _pedidoTela = new PedidoTela(testsFixture.BrowserHelper);
+            _loginUsuarioTela = new LoginUsuarioTela(testsFixture.BrowserHelper);
+        }
+
+        [Given(@"que o usuário esteja logado")]
+        public void DadoQueOUsuarioEstejaLogado()
+        {
+            // Arrange
+            _testsFixture.Usuario = new Usuario.Usuario
+            {
+                Email = "teste@teste.com",
+                Senha = "Teste@123"
+            };
+
+            // Act
+            var logado = _loginUsuarioTela.Login(_testsFixture.Usuario);
+
+            // Assert
+            Assert.True(logado);
         }
 
         [Given(@"que um produto esteja na vitrine")]
@@ -38,21 +58,8 @@ namespace NerdStore.BDD.Tests.Pedido
         [Given(@"esteja disponível no estoque")]
         public void DadoEstejaDisponivelNoEstoque()
         {
-            // Arrange
-
-            // Act
-
             // Assert
-        }
-
-        [Given(@"o usuário esteja logado")]
-        public void DadoOUsuarioEstejaLogado()
-        {
-            // Arrange
-
-            // Act
-
-            // Assert
+            Assert.True(_pedidoTela.ObterQuantidadeNoEstoque() > 0);
         }
 
         [Given(@"o mesmo produto tenha sido adicionado ao carrinho anteriormente")]
@@ -68,21 +75,18 @@ namespace NerdStore.BDD.Tests.Pedido
         [When(@"o usuário adicionar uma unidade ao carrinho")]
         public void QuandoOUsuarioAdicionarUmaUnidadeAoCarrinho()
         {
-            // Arrange
-
             // Act
-
-            // Assert
+            _pedidoTela.ClicarEmComprarAgora();
         }
 
         [When(@"o usuário adicionar um item acima da quantidade máxima permitida")]
         public void QuandoOUsuarioAdicionarUmItemAcimaDaQuantidadeMaximaPermitida()
         {
             // Arrange
+            _pedidoTela.ClicarAdicionarQuantidadeItens(Vendas.Domain.Pedido.MAX_UNIDADES_ITEM + 1);
 
             // Act
-
-            // Assert
+            _pedidoTela.ClicarEmComprarAgora();
         }
 
         [When(@"o usuário adicionar uma unidade no pedido")]
@@ -108,31 +112,40 @@ namespace NerdStore.BDD.Tests.Pedido
         [Then(@"o usuário será redirecionado ao resumo da compra")]
         public void EntaoOUsuarioSeraRedirecionadoAoResumoDaCompra()
         {
-            // Arrange
-
-            // Act
-
             // Assert
+            Assert.True(_pedidoTela.ValidarSeEstaNoCarrinhoDeCompras());
         }
 
         [Then(@"o valor total do pedido será extatamente o valor do item adicionado")]
         public void EntaoOValorTotalDoPedidoSeraExtatamenteOValorDoItemAdicionado()
         {
             // Arrange
-
-            // Act
+            var valorUnitario = _pedidoTela.ObterValorUnitarioProdutoCarrinho();
+            var valorTotal = _pedidoTela.ObterValorTotalCarrinho();
 
             // Assert
+            Assert.Equal(valorUnitario, valorTotal);
         }
 
         [Then(@"receberá uma mensagem de erro mencionando que foi ultrapassada a quantidade limite")]
         public void EntaoReceberaUmaMensagemDeErroMencionandoQueFoiUltrapassadaAQuantidadeLimite()
         {
             // Arrange
-
-            // Act
+            var mensagem = _pedidoTela.ObterMensagemDeErroProduto();
 
             // Assert
+            Assert.Contains(Vendas.Domain.Pedido.MAX_UNIDADES_ITEM.ToString(), mensagem);
+        }
+
+
+        [Given(@"aceita o uso de cookies")]
+        public void EAceitaUsoDeCookies()
+        {
+            // Act
+            _loginUsuarioTela.AceitarCookies();
+
+            // Assert
+            Assert.False(_loginUsuarioTela.ValidarSeElementoExistePorId("#cookieConsent"));
         }
 
         [Then(@"a quantidade quantidade daquele produto será acrescida de uma unidade a mais")]

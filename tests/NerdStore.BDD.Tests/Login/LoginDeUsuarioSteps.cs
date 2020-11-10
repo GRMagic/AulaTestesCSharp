@@ -21,30 +21,6 @@ namespace NerdStore.BDD.Tests.Login
             _baseUsuarioTela = _loginUsuarioTela = new LoginUsuarioTela(automacaoWebTestsFixture.BrowserHelper);
         }
 
-        //[Given(@"Que o visitante está acessando o site da loja")]
-        //public void DadoQueOVisitanteEstaAcessandoOSiteDaLoja()
-        //{
-        //    // Act
-        //    _loginUsuarioTela.AcessarSiteLoja();
-
-        //    // Assert
-        //    Assert.Contains(_automacaoWebTestsFixture.Configuration.DomainUrl, _loginUsuarioTela.ObterUrl());
-        //}
-
-        //[Then(@"Uma saudação com seu e-mail será exibida no menu superior")]
-        //public void EntaoUmaSaudacaoComSeuE_MailSeraExibidaNoMenuSuperior()
-        //{
-        //    // Assert
-        //    Assert.True(_loginUsuarioTela.ValidarSaudacaoUsuarioLogado(_automacaoWebTestsFixture.Usuario));
-        //}
-
-        //[Then(@"Ele será redirecionado para a vitrine")]
-        //public void EntaoEleSeraRedirecionadoParaAVitrine()
-        //{
-        //    // Assert
-        //    Assert.Contains(_automacaoWebTestsFixture.Configuration.VitrineUrl, _loginUsuarioTela.ObterUrl());
-        //}
-
         [When(@"Ele clicar em login")]
         public void QuandoEleClicarEmLogin()
         {
@@ -53,8 +29,8 @@ namespace NerdStore.BDD.Tests.Login
 
             // Assert
             Assert.Contains(_automacaoWebTestsFixture.Configuration.LoginUrl,_loginUsuarioTela.ObterUrl());
-        }
-        
+        }        
+
         [When(@"Preencher os dados do formulario de login")]
         public void QuandoPreencherOsDadosDoFormularioDeLogin(Table table)
         {

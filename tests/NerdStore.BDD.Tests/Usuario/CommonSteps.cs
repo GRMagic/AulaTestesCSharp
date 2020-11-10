@@ -40,5 +40,6 @@ namespace NerdStore.BDD.Tests.Usuario
             // Assert
             Assert.Contains(_automacaoWebTestsFixture.Configuration.VitrineUrl, _baseUsuarioTela.ObterUrl());
         }
+
     }
 }

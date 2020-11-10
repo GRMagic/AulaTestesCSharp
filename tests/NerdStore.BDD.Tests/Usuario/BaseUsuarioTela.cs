@@ -21,5 +21,15 @@ namespace NerdStore.BDD.Tests.Usuario
             return Helper.ObterTextoElementoPorClasseCss("text-danger")
                 .Contains(mensagem);
         }
+
+        internal void AceitarCookies()
+        {
+            Helper.ClicarPorXPath(@"//*[@id=""cookieConsent""]/button/span");
+        }
+
+        internal bool ValidarSeElementoExistePorId(string id)
+        {
+            return Helper.ValidarSeElementoExistePorId(id);
+        }
     }
 }

@@ -8,6 +8,7 @@ using NerdStore.Catalogo.Application.Services;
 using NerdStore.Core.Messages.CommonMessages.Notifications;
 using NerdStore.Vendas.Application.Commands;
 using NerdStore.Vendas.Application.Queries;
+using NerdStore.Vendas.Data;
 
 namespace NerdStore.WebApp.MVC.Controllers
 {

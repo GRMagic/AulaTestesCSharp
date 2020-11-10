@@ -100,7 +100,7 @@ namespace NerdStore.BDD.Tests.Config
             return Wait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy(By.ClassName(className)));
         }
 
-        public bool ValidarSeElementoExistePorIr(string id)
+        public bool ValidarSeElementoExistePorId(string id)
         {
             return ElementoExistente(By.Id(id));
         }
