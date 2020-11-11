@@ -62,14 +62,34 @@ namespace NerdStore.BDD.Tests.Pedido
             Assert.True(_pedidoTela.ObterQuantidadeNoEstoque() > 0);
         }
 
+        [Given(@"o carrinho esteja vazio")]
+        public void DadoOCarrinhoEstejaVazio()
+        {
+            // Act
+            _pedidoTela.NavegarParaCarrinhoDeCompras();
+            _pedidoTela.ZerarCarrinhoDeCompras();
+
+            // Assert
+            Assert.Equal(0, _pedidoTela.ObterValorTotalCarrinho());
+
+            _pedidoTela.VoltarNavegacao();
+        }
+
+
         [Given(@"o mesmo produto tenha sido adicionado ao carrinho anteriormente")]
         public void DadoOMesmoProdutoTenhaSidoAdicionadoAoCarrinhoAnteriormente()
         {
-            // Arrange
-
             // Act
+            _pedidoTela.NavegarParaCarrinhoDeCompras();
+            _pedidoTela.ZerarCarrinhoDeCompras();
+            _pedidoTela.AcessarVitrineDeProdutos();
+            _pedidoTela.ObterDetalhesProduto();
+            _pedidoTela.ClicarEmComprarAgora();
 
             // Assert
+            Assert.True(_pedidoTela.ValidarSeEstaNoCarrinhoDeCompras());
+
+            _pedidoTela.VoltarNavegacao();
         }
 
         [When(@"o usuário adicionar uma unidade ao carrinho")]
@@ -83,7 +103,7 @@ namespace NerdStore.BDD.Tests.Pedido
         public void QuandoOUsuarioAdicionarUmItemAcimaDaQuantidadeMaximaPermitida()
         {
             // Arrange
-            _pedidoTela.ClicarAdicionarQuantidadeItens(Vendas.Domain.Pedido.MAX_UNIDADES_ITEM + 1);
+            _pedidoTela.ClicarAdicionarQuantidadeItens(Vendas.Domain.Pedido.MAX_UNIDADES_ITEM); // Já inicia em 1
 
             // Act
             _pedidoTela.ClicarEmComprarAgora();
@@ -92,21 +112,18 @@ namespace NerdStore.BDD.Tests.Pedido
         [When(@"o usuário adicionar uma unidade no pedido")]
         public void QuandoOUsuarioAdicionarUmaUnidadeNoPedido()
         {
-            // Arrange
-
             // Act
-
-            // Assert
+            _pedidoTela.ClicarEmComprarAgora();
         }
 
         [When(@"o usuário adicionar mais que a quantidade máxima permitida ao carrinho")]
         public void QuandoOUsuarioAdicionarMaisQueAQuantidadeMaximaPermitidaAoCarrinho()
         {
             // Arrange
+            _pedidoTela.ClicarAdicionarQuantidadeItens(Vendas.Domain.Pedido.MAX_UNIDADES_ITEM + 1);
 
             // Act
-
-            // Assert
+            _pedidoTela.ClicarEmComprarAgora();
         }
 
         [Then(@"o usuário será redirecionado ao resumo da compra")]
@@ -151,21 +168,20 @@ namespace NerdStore.BDD.Tests.Pedido
         [Then(@"a quantidade quantidade daquele produto será acrescida de uma unidade a mais")]
         public void EntaoAQuantidadeQuantidadeDaqueleProdutoSeraAcrescidaDeUmaUnidadeAMais()
         {
-            // Arrange
-
-            // Act
-
             // Assert
+            Assert.True(_pedidoTela.ObterQuantidadeDeItensPrimeiroProdutoCarrinho() == 2);
         }
 
         [Then(@"o valor total do pedido será a multiplicação da quantidade de itens pelo valor unitário")]
         public void EntaoOValorTotalDoPedidoSeraAMultiplicacaoDaQuantidadeDeItensPeloValorUnitario()
         {
             // Arrange
-
-            // Act
+            var valorUnitario = _pedidoTela.ObterValorUnitarioProdutoCarrinho();
+            var valorCarrinho = _pedidoTela.ObterValorTotalCarrinho();
+            var quantidadeUnidades = _pedidoTela.ObterQuantidadeDeItensPrimeiroProdutoCarrinho();
 
             // Assert
+            Assert.Equal(valorUnitario * quantidadeUnidades, valorCarrinho);
         }
     }
 }

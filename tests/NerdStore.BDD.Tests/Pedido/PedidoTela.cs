@@ -76,42 +76,43 @@ namespace NerdStore.BDD.Tests.Pedido
             return Helper.ObterTextoElementoPorClasseCss("alert-danger");
         }
 
-        //public void NavegarParaCarrinhoDeCompras()
-        //{
-        //    Helper.ObterElementoPorXPath("/html/body/header/nav/div/div/ul/li[3]/a").Click();
-        //}
-        //public string ObterIdPrimeiroProdutoCarrinho()
-        //{
-        //    return Helper.ObterElementoPorXPath("/html/body/div/main/div/div/div/table/tbody/tr[1]/td[1]/div/div/h4/a")
-        //        .GetAttribute("href");
-        //}
+        public void NavegarParaCarrinhoDeCompras()
+        {
+            Helper.ObterElementoPorXPath("/html/body/header/nav/div/div/ul/li[3]/a").Click();
+        }
 
-        //public void GarantirQueOPrimeiroItemDaVitrineEstejaAdicionado()
-        //{
-        //    NavegarParaCarrinhoDeCompras();
-        //    if (ObterValorTotalCarrinho() > 0) return;
+        public string ObterIdPrimeiroProdutoCarrinho()
+        {
+            return Helper.ObterElementoPorXPath("/html/body/div/main/div/div/div/table/tbody/tr[1]/td[1]/div/div/h4/a")
+                .GetAttribute("href");
+        }
 
-        //    AcessarVitrineDeProdutos();
-        //    ObterDetalhesDoProduto();
-        //    ClicarEmComprarAgora();
-        //}
+        public void GarantirQueOPrimeiroItemDaVitrineEstejaAdicionado()
+        {
+            NavegarParaCarrinhoDeCompras();
+            if (ObterValorTotalCarrinho() > 0) return;
 
-        //public int ObterQuantidadeDeItensPrimeiroProdutoCarrinho()
-        //{
-        //    return Convert.ToInt32(Helper.ObterValorTextBoxPorId("quantidade"));
-        //}
+            AcessarVitrineDeProdutos();
+            ObterDetalhesProduto();
+            ClicarEmComprarAgora();
+        }
 
-        //public void VoltarNavegacao(int vezes = 1)
-        //{
-        //    Helper.VoltarNavegacao(vezes);
-        //}
+        public int ObterQuantidadeDeItensPrimeiroProdutoCarrinho()
+        {
+            return Convert.ToInt32(Helper.ObterValorTextBoxPorId("quantidade"));
+        }
 
-        //public void ZerarCarrinhoDeCompras()
-        //{
-        //    while (ObterValorTotalCarrinho() > 0)
-        //    {
-        //        Helper.ClicarPorXPath("/html/body/div/main/div/div/div/table/tbody/tr[1]/td[5]/form/button");
-        //    }
-        //}
+        public void VoltarNavegacao(int vezes = 1)
+        {
+            Helper.VoltarNavegacao(vezes);
+        }
+
+        public void ZerarCarrinhoDeCompras()
+        {
+            while (ObterValorTotalCarrinho() > 0)
+            {
+                Helper.ClicarPorXPath("/html/body/div/main/div/div/div/table/tbody/tr[1]/td[5]/form/button");
+            }
+        }
     }
 }
