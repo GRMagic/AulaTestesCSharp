@@ -1,6 +1,7 @@
 ﻿using System;
 using FluentValidation;
 using NerdStore.Core.Messages;
+using NerdStore.Vendas.Domain;
 
 namespace NerdStore.Vendas.Application.Commands
 {
@@ -41,8 +42,8 @@ namespace NerdStore.Vendas.Application.Commands
                 .WithMessage("A quantidade miníma de um item é 1");
 
             RuleFor(c => c.Quantidade)
-                .LessThan(15)
-                .WithMessage("A quantidade máxima de um item é 15");
+                .LessThan(Pedido.MAX_UNIDADES_ITEM)
+                .WithMessage($"A quantidade máxima de um item é {Pedido.MAX_UNIDADES_ITEM}");
         }
     }
 }

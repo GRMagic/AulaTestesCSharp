@@ -28,35 +28,42 @@ namespace NerdStore.Vendas.Application.Commands
         }
         public async Task<bool> Handle(AdicionarItemPedidoCommand message, CancellationToken cancellationToken)
         {
-            if (!await ValidarComando(message)) return false;
-
-            var pedidoItem = new PedidoItem(message.ProdutoId, message.ProdutoNome, message.Quantidade, message.ValorUnitario);
-
-            var pedido = await _pedidoRepository.ObterPedidoRascunhoPorClienteId(message.ClienteId);
-            if(pedido == null)
+            try
             {
-                pedido = Pedido.PedidoFactory.NovoPedidoRascunho(message.ClienteId);
-                pedido.AdicionarItem(pedidoItem);
-                _pedidoRepository.Adicionar(pedido);
-            }
-            else
-            {
-                var pedidoItemExistente = pedido.PedidoItemExistente(pedidoItem);
-                pedido.AdicionarItem(pedidoItem);
-                if (pedidoItemExistente)
+                if (!await ValidarComando(message)) return false;
+
+                var pedidoItem = new PedidoItem(message.ProdutoId, message.ProdutoNome, message.Quantidade, message.ValorUnitario);
+
+                var pedido = await _pedidoRepository.ObterPedidoRascunhoPorClienteId(message.ClienteId);
+                if (pedido == null)
                 {
-                    _pedidoRepository.AtualizarItem(pedido.PedidoItems.FirstOrDefault(i => i.ProdutoId == message.ProdutoId));
+                    pedido = Pedido.PedidoFactory.NovoPedidoRascunho(message.ClienteId);
+                    pedido.AdicionarItem(pedidoItem);
+                    _pedidoRepository.Adicionar(pedido);
                 }
                 else
-                {    
-                    _pedidoRepository.AdicionarItem(pedidoItem);
+                {
+                    var pedidoItemExistente = pedido.PedidoItemExistente(pedidoItem);
+                    pedido.AdicionarItem(pedidoItem);
+                    if (pedidoItemExistente)
+                    {
+                        _pedidoRepository.AtualizarItem(pedido.PedidoItems.FirstOrDefault(i => i.ProdutoId == message.ProdutoId));
+                    }
+                    else
+                    {
+                        _pedidoRepository.AdicionarItem(pedidoItem);
+                    }
+                    _pedidoRepository.Atualizar(pedido);
                 }
-                _pedidoRepository.Atualizar(pedido);
-            }
 
-            pedido.AdicionarEvento(new PedidoItemAdicionadoEvent(pedido.ClienteId, pedido.Id, pedidoItem.ProdutoId, pedidoItem.ProdutoNome, pedidoItem.ValorUnitario, pedidoItem.Quantidade));
-            
-            return await _pedidoRepository.UoW.Commit();
+                pedido.AdicionarEvento(new PedidoItemAdicionadoEvent(pedido.ClienteId, pedido.Id, pedidoItem.ProdutoId, pedidoItem.ProdutoNome, pedidoItem.ValorUnitario, pedidoItem.Quantidade));
+                return await _pedidoRepository.UoW.Commit();
+            }
+            catch(DomainException de)
+            {
+                await _mediator.Publish(new DomainNotification("pedido", de.Message), cancellationToken);
+                return false;
+            }
         }
 
         public async Task<bool> Handle(AtualizarItemPedidoCommand message, CancellationToken cancellationToken)
