@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>Teste do xUnit</Title>
+			<Author>Gustavo</Author>
+			<Description>Cria um exemplo de teste vazio usando xUnit</Description>
+			<Shortcut>faaa</Shortcut>
+        </Header>
+        <Snippet>
+			<Imports>
+				<Import>
+					<Namespace>Xunit</Namespace>
+				</Import>
+			</Imports>
+            <Code Language="CSharp">
+				<![CDATA[
+					[Fact(DisplayName = "$DisplayName$")]
+					[Trait("$TraitName$", "$TraitValue$")]
+					public async Task $TestName$()
+					{
+						// Arrange
+						
+						// Act
+						
+						// Assert
+						
+					}
+				]]>
+			</Code>
+			<Declarations>
+				<Literal>
+					<ID>DisplayName</ID>
+					<ToolTip>Informe o nome do teste</ToolTip>
+					<Default>Nome do teste</Default>
+				</Literal>
+				<Literal>
+					<ID>TestName</ID>
+					<ToolTip>Informe o nome da função de teste</ToolTip>
+					<Default>DadoAlgo_QuandoAlgo_EntaoAlgo</Default>
+				</Literal>
+				<Literal>
+					<ID>TraitName</ID>
+					<ToolTip>Informe o nome da característica</ToolTip>
+					<Default>Categoria</Default>
+				</Literal>
+				<Literal>
+					<ID>TraitValue</ID>
+					<ToolTip>Informe o valor da característica</ToolTip>
+					<Default>Serviços</Default>
+				</Literal>
+			</Declarations>
+        </Snippet>
+    </CodeSnippet>
+</CodeSnippets>
